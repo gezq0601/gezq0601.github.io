@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Pre-school Tasks - Notes of gezq0601</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Notes of gezq0601</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Software</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../software/typora/" class="dropdown-item">Typora</a>
+</li>
+                                    
+<li>
+    <a href="../../software/git/" class="dropdown-item">Git</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">CAGD</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">Pre-school Tasks</a>
+</li>
+                                    
+<li>
+    <a href="../course_tasks/" class="dropdown-item">Course Tasks</a>
+</li>
+                                    
+<li>
+    <a href="../barycentric_coordinates/" class="dropdown-item">Barycentric Coordinates</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Cpp</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../cpp/libigl/" class="dropdown-item">libigl</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Python</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../python/numpy/" class="dropdown-item">numpy</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../software/git/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../course_tasks/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#nbernstein" class="nav-link">n次Bernstein基函数的绘制</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#nbezier" class="nav-link">n次Bézier曲线的绘制</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_1" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_1" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_1" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_1" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#nbezier_1" class="nav-link">n次Bézier曲线的几何作图法</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_2" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_2" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_2" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_2" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#bezier" class="nav-link">Bézier曲线的插值</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_3" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_3" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_3" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_3" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#nb" class="nav-link">n次B样条基函数的绘制</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_4" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_4" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_4" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_4" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#nb_1" class="nav-link">n次B样条曲线的绘制</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_5" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_5" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_5" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_5" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#b" class="nav-link">三次均匀B样条曲线插值</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_6" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_6" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_6" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_6" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#_1" class="nav-link">四点插值细分法</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_7" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_7" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_7" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_7" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#wachspress" class="nav-link">平面多边形Wachspress坐标的计算及其等高线</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_8" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_8" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_8" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_8" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#_2" class="nav-link">平面多边形中值坐标的计算及其等高线</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_9" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_9" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_9" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_9" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#catmull-clark" class="nav-link">Catmull-Clark细分曲面</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_10" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_10" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_10" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_10" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#loop" class="nav-link">Loop细分曲面</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_11" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_11" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_11" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_11" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#butterfly" class="nav-link">Butterfly细分曲面</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_12" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_12" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_12" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_12" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#3d" class="nav-link">3D中值坐标的等值面</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#description_13" class="nav-link">Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#knowledge_13" class="nav-link">Knowledge</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#code_13" class="nav-link">Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#result_13" class="nav-link">Result</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="nbernstein">n次Bernstein基函数的绘制</h1>
+<h2 id="description">Description</h2>
+<blockquote>
+<p>输入<span class="arithmatex">\(n\)</span>，在同一个图中绘制<span class="arithmatex">\(n+1\)</span>个<span class="arithmatex">\(Bernstein\)</span>基函数的图像</p>
+</blockquote>
+<h2 id="knowledge">Knowledge</h2>
+<p><span class="arithmatex">\(Def\)</span>（<span class="arithmatex">\(Bernstein\)</span>基函数）：<span class="arithmatex">\(n\)</span>次<span class="arithmatex">\(Bernstein\)</span>基函数为<span class="arithmatex">\(B_0^n(t), B_1^n(t),\cdots,B_i^n(t),\cdots,B_n^n(t)\)</span>，它们依次为二次项<span class="arithmatex">\([t+(1-t)]^n\)</span>展开后的各项，其中<span class="arithmatex">\(B_i^n(t)\)</span>是<span class="arithmatex">\(Bernstein\)</span>多项式。</p>
+<div class="arithmatex">\[
+B_i^n(t) =
+\begin{pmatrix} n \\ i \end{pmatrix}
+(1-t)^{n-i} t^i, \quad
+t\in [0,1], \quad
+i = 0, 1, \cdots, n.
+\]</div>
+<p><span class="arithmatex">\(Thinking\)</span>：</p>
+<ol>
+<li>由输入的<span class="arithmatex">\(Bernstein\)</span>基函数的次数<span class="arithmatex">\(n\)</span>，利用<span class="arithmatex">\(for\)</span>循环依次计算并绘制每条曲线<span class="arithmatex">\(B_i^n(t),(i=0,1,\cdots,n)\)</span>。</li>
+<li>定义函数：实现<span class="arithmatex">\(Bernstein\)</span>基函数的定义公式，即给定自变量<span class="arithmatex">\(t\)</span>计算对应的函数值。</li>
+</ol>
+<h2 id="code">Code</h2>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 7/28/2024 - 11:24 PM
+    @author: gezq
+&quot;&quot;&quot;
+import numpy as np
+from matplotlib import pyplot as plt
+from math import factorial as fac
+
+# To solve the problem of plt
+plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;SimHei&quot;]
+plt.rcParams[&quot;axes.unicode_minus&quot;] = False
+
+
+def bernstein(n, i, t):
+    &quot;&quot;&quot;
+    Calculate the values of Bernstein's function.
+    :param n: the degree of the Bernstein's function.
+    :param i: the order of the Bernstein's function.
+    :param t: the array of self-variable of the Bernstein's function.
+    :return: the values of Bernstein's function.
+    &quot;&quot;&quot;
+    return (fac(n) / (fac(i) * fac(n - i))) * pow(t, i) * pow(1 - t, n - i)
+
+
+def draw_bernstein(n):
+    &quot;&quot;&quot;
+    Draw the Bernstein's function.
+    :param n: the degree of the Bernstein's function.
+    :return: No return.
+    &quot;&quot;&quot;
+    t = np.linspace(0, 1)
+    for i in range(n + 1):
+        plt.plot(t, bernstein(n, i, t))
+        # Use the property of max value of Bernstein basis function
+        plt.text(i / n, bernstein(n, i, i / n) * 1.02, f'$ B_{i}^{n} $')
+    plt.title(f'{n}-order Bernstein basis functions')
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of Bernstein basis functions n=&quot;))
+    draw_bernstein(n)
+
+</code></pre>
+<h2 id="result">Result</h2>
+<p><img alt="task01-1_degree_bernstein_basis_function" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task01-1_degree_bernstein_basis_function.png" /></p>
+<p><img alt="task01-3_degree_bernstein_basis_function" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task01-3_degree_bernstein_basis_function.png" /></p>
+<p><img alt="task01-6_degree_bernstein_basis_function" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task01-6_degree_bernstein_basis_function.png" /></p>
+<h1 id="nbezier">n次Bézier曲线的绘制</h1>
+<h2 id="description_1">Description</h2>
+<blockquote>
+<p>输入<span class="arithmatex">\(n\)</span>，鼠标输入<span class="arithmatex">\(n+1\)</span>个点，绘制一条<span class="arithmatex">\(Bézier\)</span>曲线，同时绘制控制多边形。</p>
+<p>点用空心圆点表示，控制多边形与曲线用不同颜色区分。</p>
+<p>鼠标输入控制顶点，每个点附近标记点序列号（即下标）。</p>
+</blockquote>
+<h2 id="knowledge_1">Knowledge</h2>
+<p><span class="arithmatex">\(Def\)</span>（<span class="arithmatex">\(Bézier\)</span>曲线）：<span class="arithmatex">\(n\)</span>次<span class="arithmatex">\(Bézier\)</span>曲线的定义如下，其中<span class="arithmatex">\(P_i\)</span>为控制点，<span class="arithmatex">\(B_i^n(t)\)</span>为<span class="arithmatex">\(Bernstein\)</span>基函数。</p>
+<div class="arithmatex">\[
+\mathbf{C}(t) = \sum_{i=0}^n \mathbf{P}_i B_i^n(t), \quad
+t \in [0,1].
+\]</div>
+<p><span class="arithmatex">\(Thinking\)</span>：</p>
+<ol>
+<li>导入<code>task01</code>中计算<span class="arithmatex">\(B_i^n(t)\)</span>的函数。</li>
+<li>定义函数：计算所有<span class="arithmatex">\(Bernstein\)</span>基函数在<span class="arithmatex">\(t\in[0,1]\)</span>之间的所有值。</li>
+<li>思考点：由<span class="arithmatex">\(Bézier\)</span>曲线的定义（<span class="arithmatex">\(Bernstein\)</span>基函数与控制点）计算对应的函数值——类似矩阵相乘的思想。</li>
+<li>定义函数：绘制图形(<span class="arithmatex">\(Bézier\)</span>曲线、控制多边形及控制顶点)。</li>
+<li>思考点：多个<span class="arithmatex">\(Bernstein\)</span>基函数的值的存放形式，及后续如何获取<span class="arithmatex">\(Bézier\)</span>曲线的函数值——<code>DataFrame</code>。</li>
+<li>思考点：鼠标选点——未使用<code>figure.canvas.mpl_connect</code>绑定事件，而采用更简便的<code>ginput()</code>函数直接获取点的坐标。</li>
+<li>为便于后续代码中<code>import task02</code>，因此调整函数中变量以参数形式传递，避免使用全局变量，增强了代码的可重用性。</li>
+</ol>
+<h2 id="code_1">Code</h2>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 7/29/2024 - 8:36 AM
+    @author: gezq
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import task01
+import utils
+
+
+def calculate_bernstein(n):
+    &quot;&quot;&quot;
+    Calculate Bernstein values
+    :param n: the degree of the Bernstein's function.
+    :return: the DataFrame of the values of Bernstein's function.
+    &quot;&quot;&quot;
+    t = np.linspace(0, 1)
+    df_bernstein = pd.DataFrame()
+    # The values of each Bernstein function as a column store in df_bernstein.
+    for i in range(n + 1):
+        df_bernstein[i] = task01.bernstein(n, i, t)
+    return df_bernstein
+
+
+def calculate_bezier(n, df_points):
+    &quot;&quot;&quot;
+    Calculate Bezier values
+    :param n: the degree of the Bézier curve.
+    :param df_points: the control points.
+    :return: the DataFrame of the values of Bézier curve.
+    &quot;&quot;&quot;
+    df_bernstein = calculate_bernstein(n)
+    # Calculate the values of Bézier curve
+    df_result = df_bernstein.dot(df_points)
+    return df_result
+
+
+def draw_bezier(n, df_points):
+    &quot;&quot;&quot;
+    Draw the Bézier curve
+    :param n: the degree of the Bézier curve.
+    :param df_points: the control points.
+    :return: No return.
+    &quot;&quot;&quot;
+    df_result = calculate_bezier(n, df_points)
+    # Draw Bézier curve and control polygon.
+    df_result.plot(x='x', y='y', label='Bézier curve', color='b', ax=plt.gca())
+    df_points.plot(x='x', y='y', label='Control polygon', color='r', marker='o', markerfacecolor='w', ax=plt.gca())
+    utils.add_text_subscript(df_points)
+    plt.legend()
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of Bézier curve n=&quot;))
+    draw_bezier(n, utils.selection_point(n + 1, f'{n}-order Bézier curve'))
+
+</code></pre>
+<h2 id="result_1">Result</h2>
+<p><img alt="task02-1_degree_bezier_curve" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task02-1_degree_bezier_curve.png" /></p>
+<p><img alt="task02-3_degree_bezier_curve" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task02-3_degree_bezier_curve.png" /></p>
+<p><img alt="task02-6_degree_bezier_curve" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task02-6_degree_bezier_curve.png" /></p>
+<h1 id="nbezier_1">n次Bézier曲线的几何作图法</h1>
+<h2 id="description_2">Description</h2>
+<blockquote>
+<p>输入<span class="arithmatex">\(n\)</span>，输入变量<span class="arithmatex">\(t\)</span>，鼠标输入<span class="arithmatex">\(n+1\)</span>个点，绘制一条<span class="arithmatex">\(Bézier\)</span>曲线的控制多边形，同时绘制几何作图法过程中每个点、每条线段，最后绘制曲线上参数为$t￥的点，用不同颜色与其他点区分。</p>
+<p>鼠标输入控制顶点，每个点附近标记点序列号（即下标）。</p>
+</blockquote>
+<h2 id="knowledge_2">Knowledge</h2>
+<p><span class="arithmatex">\(Def\)</span>（<span class="arithmatex">\(de\ Casteljau\)</span>算法递推公式）：其中<span class="arithmatex">\(k\)</span>为递归轮次。</p>
+<div class="arithmatex">\[
+\mathbf P_i^k(t) = 
+\begin{cases}
+    \mathbf P_i, &amp;k=0; \quad i=0,1,\cdots,n \\
+    (1 - t) \mathbf P_{i}^{k-1}(t) 
+    + t\mathbf P_{i+1}^{k-1}(t),
+    \quad &amp;k=1,2,\cdots,n;\quad i=0,1,\cdots,n - k.
+\end{cases}
+\]</div>
+<p><span class="arithmatex">\(Thinking\)</span></p>
+<ol>
+<li>绘制<span class="arithmatex">\(Bézier\)</span>曲线、控制多边形及控制顶点与<code>task02</code>类似。</li>
+<li>思考点：递推算法的实现——由本次控制点计算出下一轮的点，将本次控制点覆盖后再绘制，重复<span class="arithmatex">\(n\)</span>次此操作。</li>
+</ol>
+<h2 id="code_2">Code</h2>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 7/29/2024 - 11:32 AM
+    @author: gezq
+&quot;&quot;&quot;
+from fractions import Fraction
+
+from matplotlib import pyplot as plt
+import task02
+import utils
+
+
+def recursive_formula(df_points, i, t):
+    &quot;&quot;&quot;
+    deCasteljau recursive formula
+    :param df_points: the control points of current time.
+    :param i: the time index.
+    :param t: the parameter value.
+    :return: the result of recursive formula.
+    &quot;&quot;&quot;
+    return (1 - t) * df_points.iloc[i] + t * df_points.iloc[i + 1]
+
+
+def recursion(n, df_points, i, t):
+    &quot;&quot;&quot;
+    deCasteljau recursive algorithm
+    :param n: the degree of the Bézier curve.
+    :param df_points: the control points of current time.
+    :param i: the time index.
+    :param t: the parameter value.
+    :return: the control points of next time.
+    &quot;&quot;&quot;
+    if i == 0:
+        return df_points
+    for j in range(n - i + 1):
+        df_points.iloc[j] = recursive_formula(df_points, j, t)
+    return df_points.iloc[:n - i + 1, :]
+
+
+def draw_bezier_geometry(n, df_points, t):
+    &quot;&quot;&quot;
+    Draw the Bézier curve of geometric processing.
+    :param n: the degree of the Bézier curve.
+    :param df_points: the control points.
+    :param t: the parameter value.
+    :return: No return.
+    &quot;&quot;&quot;
+    df_result = task02.calculate_bezier(n, df_points)
+    # Unify the color of curve, 'k' is black.
+    df_result.plot(x='x', y='y', label='Bézier curve', color='b', ax=plt.gca())
+    # Cycle n times
+    for i in range(n + 1):
+        df_points = recursion(n, df_points, i, t)
+        df_points.plot(x='x', y='y', label=f'The {i} round', marker='o', markerfacecolor='w', ax=plt.gca())
+        utils.add_text_subscript_with_specify_superscript(df_points, i)
+    plt.legend()
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of Bézier curve n=&quot;))
+    # Import Fraction for handling the parameter t.
+    t = Fraction(input(&quot;Please input the parameter t=&quot;))
+    draw_bezier_geometry(n, utils.selection_point(n + 1, f'Geometric progressing of {n}-order Bézier curve (t={t})'),
+                         float(t))
+
+</code></pre>
+<h2 id="result_2">Result</h2>
+<p><img alt="task03-2_degree_bezier_curve_geometry" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task03-2_degree_bezier_curve_geometry.png" /></p>
+<p><img alt="task03-4_degree_bezier_curve_geometry" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task03-4_degree_bezier_curve_geometry.png" /></p>
+<p><img alt="task03-8_degree_bezier_curve_geometry" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task03-8_degree_bezier_curve_geometry.png" /></p>
+<h1 id="bezier">Bézier曲线的插值</h1>
+<h2 id="description_3">Description</h2>
+<blockquote>
+<p>给定<span class="arithmatex">\(n+1\)</span>个点，要求算出<span class="arithmatex">\(n\)</span>次<span class="arithmatex">\(Bézier\)</span>曲线的控制顶点，使得<span class="arithmatex">\(n+1\)</span>个点在<span class="arithmatex">\(n\)</span>次<span class="arithmatex">\(Bézier\)</span>曲线上。</p>
+<p>鼠标输入控制顶点，每个点附近标记点序列号（即下标）。</p>
+</blockquote>
+<h2 id="knowledge_3">Knowledge</h2>
+<p><span class="arithmatex">\(Def\)</span>（<span class="arithmatex">\(Bézier\)</span>曲线的矩阵形式）：<span class="arithmatex">\(n\)</span>次<span class="arithmatex">\(Bézier\)</span>曲线的矩阵形式如下，其中<span class="arithmatex">\(P_i\)</span>为控制点，<span class="arithmatex">\(B_i^n(t)\)</span>为<span class="arithmatex">\(Bernstein\)</span>基函数。</p>
+<div class="arithmatex">\[
+\begin{align}
+    \mathbf{C}(t) &amp;= \sum_{i=0}^n \mathbf{P}_i B_i^n(t), \quad t \in [0,1]. \\
+    &amp;= \begin{pmatrix} B_0^d(t) &amp; B_1^d(t) &amp; \cdots &amp; B_d^d(t) \end{pmatrix}
+    \cdot
+    \begin{pmatrix} \mathbf{P}_0 \\ \mathbf{P}_1 \\ \vdots \\ \mathbf{P}_d \end{pmatrix}
+\end{align}
+\]</div>
+<p>若给定任意<span class="arithmatex">\(n+1\)</span>个点<span class="arithmatex">\(\boldsymbol{v}_i(i=0,1,\cdots,d)\)</span>，即<span class="arithmatex">\(\boldsymbol{v}_i = \mathbf{C}(t_i)\)</span>，则有如下形式：</p>
+<div class="arithmatex">\[
+\begin{align}
+    \begin{pmatrix} \mathbf{C}(t_0) \\ \mathbf{C}(t_1) \\ \vdots \\ \mathbf{C}(t_n) \end{pmatrix}
+    = 
+    \begin{pmatrix} \boldsymbol{v}_0 \\ \boldsymbol{v}_1 \\ \vdots \\ \boldsymbol{v}_n \end{pmatrix}
+    &amp;=
+    \begin{pmatrix} 
+        B_0^n(t_0) &amp; B_1^n(t_0) &amp; \cdots &amp; B_n^n(t_0) \\
+        B_0^n(t_1) &amp; B_1^n(t_1) &amp; \cdots &amp; B_n^n(t_1) \\
+        \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+        B_0^n(t_n) &amp; B_1^n(t_n) &amp; \cdots &amp; B_n^n(t_n) \\
+    \end{pmatrix}
+    \cdot 
+    \begin{pmatrix} \mathbf{P}_0 \\ \mathbf{P}_1 \\ \vdots \\ \mathbf{P}_n \end{pmatrix} 
+    \\\\
+    \begin{pmatrix} \mathbf{P}_0 \\ \mathbf{P}_1 \\ \vdots \\ \mathbf{P}_n \end{pmatrix}
+    &amp;= 
+    {\begin{pmatrix} 
+        B_0^n(t_0) &amp; B_1^n(t_0) &amp; \cdots &amp; B_n^n(t_0) \\
+        B_0^n(t_1) &amp; B_1^n(t_1) &amp; \cdots &amp; B_n^n(t_1) \\
+        \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+        B_0^n(t_n) &amp; B_1^n(t_n) &amp; \cdots &amp; B_n^n(t_n) \\
+    \end{pmatrix}}^{-1} 
+    \cdot
+    \begin{pmatrix} \boldsymbol{v}_0 \\ \boldsymbol{v}_1 \\ \vdots \\ \boldsymbol{v}_n \end{pmatrix}
+\end{align}
+\]</div>
+<p>为简便起见，一般取<span class="arithmatex">\(t_i = \frac{i}{n}(i=0,1,\cdots,n)\)</span>，则可得如下形式：</p>
+<div class="arithmatex">\[
+\begin{pmatrix} \mathbf{P}_0 \\ \mathbf{P}_1 \\ \vdots \\ \mathbf{P}_n \end{pmatrix}
+= 
+{\begin{pmatrix} 
+    1 &amp; 0 &amp; \cdots &amp; 0 \\
+    B_0^n(\frac{1}{d}) &amp; B_1^n(\frac{1}{d}) &amp; \cdots &amp; B_n^n(\frac{1}{d}) \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    0 &amp; 0 &amp; \cdots &amp; 1 \\
+\end{pmatrix}}^{-1} 
+\cdot
+\begin{pmatrix} \boldsymbol{v}_0 \\ \boldsymbol{v}_1 \\ \vdots \\ \boldsymbol{v}_n \end{pmatrix}
+\]</div>
+<p>将上述矩阵形式写为线性方程组形式：</p>
+<div class="arithmatex">\[
+\begin{cases}
+    \mathbf{P}_0 &amp;= \boldsymbol{v}_0 \\
+    \mathbf{P}_n &amp;= \boldsymbol{v}_n \\
+    \sum_{i=0}^{n} 
+    \begin{pmatrix} n \\ i \end{pmatrix} 
+    \left( 1-\frac{i}{n} \right)^{n-i} 
+    \left( \frac{i}{n} \right)^{i}
+    \mathbf{P}_j &amp;= \boldsymbol{v}_j,\quad
+    j=0,1,\cdots,d-1.
+\end{cases}
+\]</div>
+<p>通过求解上述线性方程组便可以求出对应<span class="arithmatex">\(n\)</span>次<span class="arithmatex">\(Bézier\)</span>曲线的<span class="arithmatex">\(n+1\)</span>个控制顶点。</p>
+<p><span class="arithmatex">\(Thinking\)</span></p>
+<ol>
+<li>绘制<span class="arithmatex">\(Bézier\)</span>曲线、控制多边形及控制顶点与<code>task02</code>, <code>task03</code>类似。</li>
+<li>思考点：求解控制顶点——由<span class="arithmatex">\(Bézier\)</span>曲线的矩阵形式可由给定的<span class="arithmatex">\(n+1\)</span>个点求解出<span class="arithmatex">\(n+1\)</span>个控制顶点。</li>
+</ol>
+<h2 id="code_3">Code</h2>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 7/29/2024 - 5:53 PM
+    @author: gezq
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import task02
+import utils
+
+
+def calculate_control_points(n, df_points):
+    &quot;&quot;&quot;
+    Calculate control points from given points.
+    :param n: the degree of the Bézier curve.
+    :param df_points: the given points.
+    :return: the control points.
+    &quot;&quot;&quot;
+    df_bernstein = task02.calculate_bernstein(n, np.linspace(0, 1, n + 1))
+    return pd.DataFrame(np.asmatrix(df_bernstein).I).dot(df_points)
+
+
+def draw_bezier_interpolation(n, df_points):
+    &quot;&quot;&quot;
+    Draw the Bézier curve of interpolation.
+    :param n: the degree of the Bézier curve.
+    :param df_points: the control points.
+    :return: No return.
+    &quot;&quot;&quot;
+    df_control_points = calculate_control_points(n, df_points)
+    df_result = task02.calculate_bezier(n, df_control_points)
+    df_points.plot(x='x', y='y', label='Picked point', color='w', marker='o', markerfacecolor='k', ax=plt.gca())
+    df_result.plot(x='x', y='y', label='Bézier curve', color='b', ax=plt.gca())
+    df_control_points.plot(x='x', y='y', label='Control polygon', color='r', marker='o', markerfacecolor='w',
+                           ax=plt.gca())
+    utils.add_text_subscript(df_control_points)
+    plt.xlabel(&quot;t&quot;)
+    plt.ylabel(&quot;u&quot;)
+    plt.xlim(xmin=0, xmax=1)
+    plt.ylim(ymin=0, ymax=5)
+    plt.legend()
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of Bernstein basis functions n=&quot;))
+    draw_bezier_interpolation(n, utils.selection_point(n + 1, f'Interpolation of {n}-order Bézier curve'))
+
+</code></pre>
+<h2 id="result_3">Result</h2>
+<p><img alt="task04-2_degree_bezier_curve_interpolation" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task04-2_degree_bezier_curve_interpolation.png" /></p>
+<p><img alt="task04-3_degree_bezier_curve_interpolation" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task04-3_degree_bezier_curve_interpolation.png" /></p>
+<p><img alt="task04-4_degree_bezier_curve_interpolation" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/task04-4_degree_bezier_curve_interpolation.png" /></p>
+<h1 id="nb">n次B样条基函数的绘制</h1>
+<h2 id="description_4">Description</h2>
+<blockquote>
+<p>输入n，在同一个图中绘制n+1个B样条基函数的图像。均匀、准均匀、非均匀的情况都需要绘制。</p>
+<p>绘制B样条基函数时，横坐标附上绘制的节点序列下标与绘制的基函数下标。</p>
+</blockquote>
+<h2 id="knowledge_4">Knowledge</h2>
+<h2 id="code_4">Code</h2>
+<h2 id="result_4">Result</h2>
+<h1 id="nb_1">n次B样条曲线的绘制</h1>
+<h2 id="description_5">Description</h2>
+<h2 id="knowledge_5">Knowledge</h2>
+<h2 id="code_5">Code</h2>
+<h2 id="result_5">Result</h2>
+<h1 id="b">三次均匀B样条曲线插值</h1>
+<h2 id="description_6">Description</h2>
+<h2 id="knowledge_6">Knowledge</h2>
+<h2 id="code_6">Code</h2>
+<h2 id="result_6">Result</h2>
+<h1 id="_1">四点插值细分法</h1>
+<h2 id="description_7">Description</h2>
+<h2 id="knowledge_7">Knowledge</h2>
+<h2 id="code_7">Code</h2>
+<h2 id="result_7">Result</h2>
+<h1 id="wachspress">平面多边形Wachspress坐标的计算及其等高线</h1>
+<h2 id="description_8">Description</h2>
+<h2 id="knowledge_8">Knowledge</h2>
+<h2 id="code_8">Code</h2>
+<h2 id="result_8">Result</h2>
+<h1 id="_2">平面多边形中值坐标的计算及其等高线</h1>
+<h2 id="description_9">Description</h2>
+<h2 id="knowledge_9">Knowledge</h2>
+<h2 id="code_9">Code</h2>
+<h2 id="result_9">Result</h2>
+<h1 id="catmull-clark">Catmull-Clark细分曲面</h1>
+<h2 id="description_10">Description</h2>
+<h2 id="knowledge_10">Knowledge</h2>
+<h2 id="code_10">Code</h2>
+<h2 id="result_10">Result</h2>
+<h1 id="loop">Loop细分曲面</h1>
+<h2 id="description_11">Description</h2>
+<h2 id="knowledge_11">Knowledge</h2>
+<h2 id="code_11">Code</h2>
+<h2 id="result_11">Result</h2>
+<h1 id="butterfly">Butterfly细分曲面</h1>
+<h2 id="description_12">Description</h2>
+<h2 id="knowledge_12">Knowledge</h2>
+<h2 id="code_12">Code</h2>
+<h2 id="result_12">Result</h2>
+<h1 id="3d">3D中值坐标的等值面</h1>
+<h2 id="description_13">Description</h2>
+<h2 id="knowledge_13">Knowledge</h2>
+<h2 id="code_13">Code</h2>
+<h2 id="result_13">Result</h2></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
