@@ -807,16 +807,589 @@ if __name__ == '__main__':
 <h1 id="nb">n次B样条基函数的绘制</h1>
 <h2 id="description_4">Description</h2>
 <blockquote>
-<p>输入n，在同一个图中绘制n+1个B样条基函数的图像。均匀、准均匀、非均匀的情况都需要绘制。</p>
-<p>绘制B样条基函数时，横坐标附上绘制的节点序列下标与绘制的基函数下标。</p>
+<p>输入<span class="arithmatex">\(n\)</span>，在同一个图中绘制<span class="arithmatex">\(n+1\)</span>个<span class="arithmatex">\(B\)</span>样条基函数的图像。均匀、准均匀、非均匀的情况都需要绘制。</p>
+<p>绘制<span class="arithmatex">\(B\)</span>样条基函数时，横坐标附上绘制的节点序列下标与绘制的基函数下标。</p>
 </blockquote>
 <h2 id="knowledge_4">Knowledge</h2>
+<p><span class="arithmatex">\(Def\)</span>（<span class="arithmatex">\(Cox-deBoor\)</span>递推公式）：给定参数<span class="arithmatex">\(u\)</span>的定义域（未声明时默认为规范定义域<span class="arithmatex">\(u\in[0,1]\)</span>）的一个分割<span class="arithmatex">\(a = u_0 \le u_1 \le \cdots \le u_k = b\)</span>，<span class="arithmatex">\(U=\{u_0, u_1, \cdots, u_k\}\)</span>称为节点序列，<span class="arithmatex">\(u_i(i=0,1,\cdots,k)\)</span>称为节点<span class="arithmatex">\((Knot)\)</span>，<span class="arithmatex">\(n\)</span>次<span class="arithmatex">\(B\)</span>样条基函数的递推公式如下</p>
+<div class="arithmatex">\[
+\begin{align}
+    N_i^0(u) &amp;= 
+    \begin{cases}
+        1, \quad &amp;if \quad u_i \le u \le u_{i+1}  \\
+        0, \quad &amp;else
+    \end{cases} \\\\
+    N_i^n(u) &amp;= \frac{u - u_i}{u_{i+n} - u_i} N_i^{n-1}(u) 
+    + \frac{u_{i+n+1} - u}{u_{i+n+1} - u_{i+1}} N_{i+1}^{n-1}(u) \\\
+    规定 \frac{0}{0} &amp;= 0
+\end{align}
+\]</div>
+<p><span class="arithmatex">\(Def(Three\ Types)\)</span>：</p>
+<ul>
+<li>均匀节点序列（<span class="arithmatex">\(Uniform\)</span>）：节点序列<span class="arithmatex">\(U\)</span>中的节点<span class="arithmatex">\(u_i\)</span>等距分布，即<span class="arithmatex">\(\Delta_i = u_{i+1} - u_i = Constant &gt; 0\)</span>。</li>
+<li>准均匀节点序列（<span class="arithmatex">\(Quasi-Uniform\)</span>）：节点序列<span class="arithmatex">\(U\)</span>中的两端节点具有重复度<span class="arithmatex">\(n+1\)</span>，即<span class="arithmatex">\(u_0 = u_1 = \cdots = u_n, \ u_{k - n} = u_{k - n + 1} = \cdots = u_{k}\)</span>；内节点具有重复度1，即均匀分布。</li>
+<li>非均匀节点序列（<span class="arithmatex">\(Non-Uniform\)</span>）：节点序列<span class="arithmatex">\(U\)</span>中的节点<span class="arithmatex">\(u_i\)</span>任意分布，即两端节点重复度<span class="arithmatex">\(\le n+1\)</span>、内节点重复度<span class="arithmatex">\(\le n\)</span>；对于开曲线，两端节点一般取重复度为<span class="arithmatex">\(n+1\)</span>。</li>
+</ul>
+<p><span class="arithmatex">\(Thinking\)</span></p>
+<ol>
+<li>思考点：如何将递归公式求解用代码实现——对照教材上的下标观察，区分为不同的情况。</li>
+<li>思考点：如何处理节点重复情况——先产生两侧重复节点，再生成内部节点，最后合成节点序列。</li>
+<li>思考点：节点重复引起的下标重叠问题——自定义修改处理情况。</li>
+</ol>
 <h2 id="code_4">Code</h2>
+<h3 id="uniform">Uniform</h3>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 8/1/2024 - 8:25 AM
+    @author: gezq
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import utils
+
+# To solve the problem of plt
+plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;SimHei&quot;]
+plt.rcParams[&quot;axes.unicode_minus&quot;] = False
+
+
+def recursive_formula(n, i, U, u):
+    &quot;&quot;&quot;
+    Recursive formula of uniform b-spline basis function.
+    :param n: the degree of the uniform b-spline basis function.
+    :param i: the subscript in the sequence of knots.
+    :param U: the sequence of knots.
+    :param u: the values of drawing curve.
+    :return: the result of recursive formula.
+    &quot;&quot;&quot;
+    if n == 0:
+        return 1 if U[i] &lt;= u &lt;= U[i + 1] else 0
+    else:
+        return ((u - U[i]) / (U[i + n] - U[i])) * recursive_formula(n - 1, i, U, u) + (
+                (U[i + n + 1] - u) / (U[i + n + 1] - U[i + 1])) * recursive_formula(n - 1, i + 1, U, u)
+
+
+def draw_b_spline(n, k):
+    &quot;&quot;&quot;
+    Draw B-spline basis functions
+    :param n: the degree of the B-spline basis function.
+    :param k: the number of the partition of u.
+    :return: No return.
+    &quot;&quot;&quot;
+    # The sequence of knots
+    U = np.linspace(0, 1, k + 1)
+    # The values of drawing curve, we can add the num to make the curve more soft.
+    u = np.linspace(0, 1, 300)
+    for i in range(k - n):
+        df_res = pd.DataFrame(columns=['x', 'y'])
+        for uu in u:
+            df_res.loc[len(df_res)] = [uu, recursive_formula(n, i, U, uu)]
+        # There is not using df_res.plot() function, to avoid the legend is show.
+        plt.plot(df_res['x'], df_res['y'])
+        max_idx = df_res['y'].idxmax()
+        plt.text(df_res['x'][max_idx], df_res['y'][max_idx], f'$N_{i}^{n}(u)$')
+
+    utils.add_subscript_knots(U)
+    plt.title(f'{n}-order {k + 1}-knots Uniform B-spline basis functions')
+    plt.xlabel(&quot;u&quot;)
+    plt.ylabel(&quot;w&quot;)
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of B-spline basis functions n=&quot;))
+    k = int(input(&quot;Please input the number of partition of u (k should be greater than n ) k=&quot;))
+    draw_b_spline(n, k)
+
+</code></pre>
+<h3 id="quasi-uniform">Quasi-Uniform</h3>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 8/1/2024 - 10:26 AM
+    @author: gezq
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import utils
+
+# To solve the problem of plt
+plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;SimHei&quot;]
+plt.rcParams[&quot;axes.unicode_minus&quot;] = False
+
+
+def recursive_formula(n, i, U, u):
+    &quot;&quot;&quot;
+    Recursive formula of quasi-uniform b-spline basis function.
+    :param n: the degree of the quasi-uniform b-spline basis function.
+    :param i: the subscript in the sequence of knots.
+    :param U: the sequence of knots.
+    :param u: the values of drawing curve.
+    :return: the result of recursive formula.
+    &quot;&quot;&quot;
+    if n == 0:
+        return 1 if U[i] &lt;= u &lt;= U[i + 1] else 0
+    else:
+        if U[i + n] - U[i] == 0 and U[i + n + 1] - U[i + 1] == 0:
+            return 0
+        elif U[i + n] - U[i] == 0:
+            return ((U[i + n + 1] - u) / (U[i + n + 1] - U[i + 1])) * recursive_formula(n - 1, i + 1, U, u)
+        elif U[i + n + 1] - U[i + 1] == 0:
+            return ((u - U[i]) / (U[i + n] - U[i])) * recursive_formula(n - 1, i, U, u)
+        else:
+            return ((u - U[i]) / (U[i + n] - U[i])) * recursive_formula(n - 1, i, U, u) + (
+                    (U[i + n + 1] - u) / (U[i + n + 1] - U[i + 1])) * recursive_formula(n - 1, i + 1, U, u)
+
+
+def draw_b_spline(n, k):
+    &quot;&quot;&quot;
+    Draw B-spline basis functions
+    :param n: the degree of the B-spline basis function.
+    :param k: the number of the partition of u.
+    :return: No return.
+    &quot;&quot;&quot;
+    # Create the sequence of knots of quasi-uniform.
+    left_U = np.repeat(0.0, n)
+    right_U = np.repeat(1.0, n)
+    # Total knots is k，subtract the repeats of two sides，so the result is k - 2 * n + 1.
+    mid_U = np.linspace(0, 1, k - 2 * n + 1)
+    # The final sequence
+    U = np.concatenate((left_U, mid_U, right_U))
+
+    # The values of drawing curve, we can add the num to make the curve more soft.
+    u = np.linspace(0, 1, 100)
+    for i in range(k - n):
+        df_res = pd.DataFrame(columns=['x', 'y'])
+        for uu in u:
+            df_res.loc[len(df_res)] = [uu, recursive_formula(n, i, U, uu)]
+        # There is not using df_res.plot() function, to avoid the legend is show.
+        plt.plot(df_res['x'], df_res['y'])
+        max_idx = df_res['y'].idxmax()
+        plt.text(df_res['x'][max_idx], df_res['y'][max_idx], f'$N_{i}^{n}(u)$')
+
+    utils.add_subscript_knots(U)
+    plt.title(f'{n}-order {k + 1}-knots Quasi-Uniform B-spline basis functions')
+    plt.xlabel(&quot;u&quot;)
+    plt.ylabel(&quot;w&quot;)
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of B-spline basis functions n=&quot;))
+    k = int(input(&quot;Please input the number of partition of u (k should be greater than 2n + 1 ) k=&quot;))
+    draw_b_spline(n, k)
+
+</code></pre>
+<h3 id="non-uniform">Non-Uniform</h3>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 8/1/2024 - 10:59 AM
+    @author: gezq
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import utils
+
+# To solve the problem of plt
+plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;SimHei&quot;]
+plt.rcParams[&quot;axes.unicode_minus&quot;] = False
+
+
+def recursive_formula(n, i, U, u):
+    &quot;&quot;&quot;
+    Recursive formula of non-uniform b-spline basis function.
+    :param n: the degree of the non-uniform b-spline basis function.
+    :param i: the subscript in the sequence of knots.
+    :param U: the sequence of knots.
+    :param u: the values of drawing curve.
+    :return: the result of recursive formula.
+    &quot;&quot;&quot;
+    if n == 0:
+        return 1 if U[i] &lt;= u &lt;= U[i + 1] else 0
+    else:
+        if U[i + n] - U[i] == 0 and U[i + n + 1] - U[i + 1] == 0:
+            return 0
+        elif U[i + n] - U[i] == 0:
+            return ((U[i + n + 1] - u) / (U[i + n + 1] - U[i + 1])) * recursive_formula(n - 1, i + 1, U, u)
+        elif U[i + n + 1] - U[i + 1] == 0:
+            return ((u - U[i]) / (U[i + n] - U[i])) * recursive_formula(n - 1, i, U, u)
+        else:
+            return ((u - U[i]) / (U[i + n] - U[i])) * recursive_formula(n - 1, i, U, u) + (
+                    (U[i + n + 1] - u) / (U[i + n + 1] - U[i + 1])) * recursive_formula(n - 1, i + 1, U, u)
+
+
+def draw_b_spline(n, k):
+    &quot;&quot;&quot;
+    Draw B-spline basis functions
+    :param n: the degree of the B-spline basis function.
+    :param k: the number of the partition of u.
+    :return: No return.
+    &quot;&quot;&quot;
+    # Create the sequence of knots of quasi-uniform.
+    left_U = np.repeat(0.0, n + 1)
+    right_U = np.repeat(1.0, n + 1)
+    # Total knots is k，subtract the repeats of two sides，so the result is k - 2*(n+1) + 1.
+    # Take normal distribution to generate the inner knots and sort them.
+    mid_U = np.sort(np.random.rand(k - 2 * (n + 1) + 1))
+    # The final sequence
+    U = np.concatenate((left_U, mid_U, right_U))
+
+    # The values of drawing curve, we can add the num to make the curve more soft.
+    u = np.linspace(0, 1, 100)
+    for i in range(k - n):
+        df_res = pd.DataFrame(columns=['x', 'y'])
+        for uu in u:
+            df_res.loc[len(df_res)] = [uu, recursive_formula(n, i, U, uu)]
+        # There is not using df_res.plot() function, to avoid the legend is show.
+        plt.plot(df_res['x'], df_res['y'])
+        max_idx = df_res['y'].idxmax()
+        plt.text(df_res['x'][max_idx], df_res['y'][max_idx], f'$N_{i}^{n}(u)$')
+
+    utils.add_subscript_knots(U)
+    plt.title(f'{n}-order {k + 1}-knots Non-Uniform B-spline basis functions')
+    plt.xlabel(&quot;u&quot;)
+    plt.ylabel(&quot;w&quot;)
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of B-spline basis functions n=&quot;))
+    k = int(input(&quot;Please input the number of partition of u (k should be greater than 2n + 1 ) k=&quot;))
+    draw_b_spline(n, k)
+
+</code></pre>
 <h2 id="result_4">Result</h2>
+<h3 id="uniform_1">Uniform</h3>
+<p><img alt="image-20240801164439174" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801164439174.png" /></p>
+<p><img alt="image-20240801164505585" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801164505585.png" /></p>
+<p><img alt="image-20240801164555437" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801164555437.png" /></p>
+<p><img alt="image-20240801164623137" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801164623137.png" /></p>
+<p><img alt="image-20240801170104486" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170104486.png" /></p>
+<p><img alt="image-20240801164933619" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801164933619.png" /></p>
+<h3 id="quasi-uniform_1">Quasi-Uniform</h3>
+<p><img alt="image-20240801165253842" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801165253842.png" /></p>
+<p><img alt="image-20240801165444594" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801165444594.png" /></p>
+<p><img alt="image-20240801165513136" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801165513136.png" /></p>
+<p><img alt="image-20240801165649491" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801165649491.png" /></p>
+<p><img alt="image-20240801165715927" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801165715927.png" /></p>
+<p><img alt="image-20240801170000061" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170000061.png" /></p>
+<p><img alt="image-20240801165851241" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801165851241.png" /></p>
+<h3 id="non-uniform_1">Non-Uniform</h3>
+<p><img alt="image-20240801170401186" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170401186.png" /></p>
+<p><img alt="image-20240801170458669" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170458669.png" /></p>
+<p><img alt="image-20240801170437545" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170437545.png" /></p>
+<p><img alt="image-20240801170519004" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170519004.png" /></p>
+<p><img alt="image-20240801170554242" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170554242.png" /></p>
+<p><img alt="image-20240801170610205" src="https://cdn.jsdelivr.net/gh/gezq0601/Pictures/typora/image-20240801170610205.png" /></p>
 <h1 id="nb_1">n次B样条曲线的绘制</h1>
 <h2 id="description_5">Description</h2>
+<blockquote>
+<p>输入<span class="arithmatex">\(n\)</span>，鼠标输入<span class="arithmatex">\(n+1\)</span>个点，绘制一条<span class="arithmatex">\(B\)</span>样条曲线，同时绘制控制多边形。均匀、准均匀、非均匀的情况都需要绘制。</p>
+<p>点用空心圆点表示，控制多边形与曲线用不同颜色区分。</p>
+<p>鼠标输入控制顶点，每个点附近标记点序列号（即下标）。</p>
+</blockquote>
 <h2 id="knowledge_5">Knowledge</h2>
+<p><span class="arithmatex">\(Def\)</span>（<span class="arithmatex">\(B\)</span>样条曲线）：</p>
+<div class="arithmatex">\[
+\mathbf{C}(u) = \sum_{i=0}^k N_i^n(u) \mathbf{P}_i
+\]</div>
+<p><span class="arithmatex">\(Thinking\)</span></p>
 <h2 id="code_5">Code</h2>
+<h3 id="uniform_2">Uniform</h3>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 8/1/2024 - 5:50 PM
+    @author: gezq
+&quot;&quot;&quot;
+
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import task0501_uniform
+import utils
+
+
+def calculate_b_spline_function(n, i, U):
+    # The values of drawing curve, we can add the num to make the curve more soft.
+    u = np.linspace(0, 1, 100)
+    df_b_spline = pd.DataFrame(u, columns=['u'])
+    for j in range(n + 1):
+        single_list = []
+        for uu in u:
+            single_list.append(task0501_uniform.recursive_formula(n, i + j, U, uu))
+        df_b_spline[j] = single_list
+    return df_b_spline
+
+
+def calculate_b_spline(n, k, df_points):
+    # The sequence of knots
+    U = np.linspace(0, 1, n + k + 1)
+    # utils.add_subscript_knots(U)
+
+    df_result = pd.DataFrame()
+    # Handle each segment of b-spline curve
+    for i in range(k - n):
+        df_b_spline = calculate_b_spline_function(n, i, U)
+        # we can get the b-spline basis function by using the range of u
+        df_basis = df_b_spline[df_b_spline['u'].apply(lambda x:
+                                                      U[i + n] &lt; x &lt; U[i + n + 1])].iloc[:, 1:].reset_index(drop=True)
+        df_real = df_points.iloc[i: i + n + 1].reset_index(drop=True)
+        df_result = pd.concat([df_result, df_basis.dot(df_real)])
+    return df_result
+
+
+def draw_b_spline(n, k, df_points):
+    &quot;&quot;&quot;
+    Draw B-spline curve.
+    :param n: the degree of the B-spline curve.
+    :param k: the number of the control points.
+    :param df_points: the control points.
+    :return: No return.
+    &quot;&quot;&quot;
+    df_result = calculate_b_spline(n, k, df_points)
+    # Draw B-spline curve and control polygon.
+    df_result.plot(x='x', y='y', label='B-spline curve', color='b', ax=plt.gca())
+    df_points.plot(x='x', y='y', label='Control polygon', color='r', marker='o', markerfacecolor='w', ax=plt.gca())
+    utils.add_subscript_control_points(df_points)
+    plt.title(f'{n}-order {k}-control points Uniform B-spline basis functions')
+    plt.xlabel(&quot;u&quot;)
+    plt.ylabel(&quot;w&quot;)
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of B-spline curve n=&quot;))
+    k = int(input(&quot;Please input the number of control points k=&quot;))
+    draw_b_spline(n, k, utils.selection_point(k, f'{n}-order {k}-control points Uniform B-spline basis functions'))
+
+    # case01 for test
+    # n, k = 2, 6
+    # input_point_list = [[0.3, 0.2, 0.5, 0.9, 0.8, 0.6], [1, 3, 4, 3, 2, 1]]
+
+    # case02 for test
+    # n, k = 3, 6
+    # input_point_list = [[0.1, 0.3, 0.5, 0.7, 0.8, 0.9], [2, 2.2, 3, 3.1, 2.9, 2]]
+
+    # draw_b_spline(n, k, pd.DataFrame({'x': input_point_list[0], 'y': input_point_list[1]}))
+
+</code></pre>
+<h3 id="quasi-uniform_2">Quasi-Uniform</h3>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 8/2/2024 - 11:11 AM
+    @author: gezq
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import task0502_quasi_uniform
+import utils
+
+
+def calculate_b_spline_function(n, i, U):
+    # The values of drawing curve, we can add the num to make the curve more soft.
+    u = np.linspace(0, 1, 100)
+    df_b_spline = pd.DataFrame(u, columns=['u'])
+    for j in range(n + 1):
+        single_list = []
+        for uu in u:
+            single_list.append(task0502_quasi_uniform.recursive_formula(n, i + j, U, uu))
+        df_b_spline[j] = single_list
+    return df_b_spline
+
+
+def calculate_b_spline(n, k, df_points):
+    # The sequence of knots
+    # Create the sequence of knots of quasi-uniform.
+    left_U = np.repeat(0.0, n)
+    right_U = np.repeat(1.0, n)
+    # n+k+1 - 2*n = k - n + 1
+    # Total knots is n+k+1，subtract the repeats of two sides，so the result is k - n + 1.
+    mid_U = np.linspace(0, 1, k - n + 1)
+    # The final sequence
+    U = np.concatenate((left_U, mid_U, right_U))
+    # utils.add_subscript_knots(U)
+
+    df_result = pd.DataFrame()
+    # Handle each segment of b-spline curve
+    for i in range(k - n):
+        df_b_spline = calculate_b_spline_function(n, i, U)
+        # we can get the b-spline basis function by using the range of u
+        df_basis = df_b_spline[df_b_spline['u'].apply(lambda x:
+                                                      U[i + n] &lt; x &lt; U[i + n + 1])].iloc[:, 1:].reset_index(drop=True)
+        df_real = df_points.iloc[i: i + n + 1].reset_index(drop=True)
+        df_result = pd.concat([df_result, df_basis.dot(df_real)])
+    return df_result
+
+
+def draw_b_spline(n, k, df_points):
+    &quot;&quot;&quot;
+    Draw B-spline curve.
+    :param n: the degree of the B-spline curve.
+    :param k: the number of the control points.
+    :param df_points: the control points.
+    :return: No return.
+    &quot;&quot;&quot;
+    df_result = calculate_b_spline(n, k, df_points)
+    # Draw B-spline curve and control polygon.
+    df_result.plot(x='x', y='y', label='B-spline curve', color='b', ax=plt.gca())
+    df_points.plot(x='x', y='y', label='Control polygon', color='r', marker='o', markerfacecolor='w', ax=plt.gca())
+    utils.add_subscript_control_points(df_points)
+    plt.title(f'{n}-order {k}-control points QuasiUniform B-spline basis functions')
+    plt.xlabel(&quot;u&quot;)
+    plt.ylabel(&quot;w&quot;)
+    plt.show()
+
+
+if __name__ == '__main__':
+    n = int(input(&quot;Please input the degree of B-spline curve n=&quot;))
+    k = int(input(&quot;Please input the number of control points k=&quot;))
+    draw_b_spline(n, k,
+                  utils.selection_point(k, f'{n}-order {k}-control points Quasi-Uniform B-spline basis functions'))
+
+    # case01 for test
+    # n, k = 2, 6
+    # input_point_list = [[0.2, 0.3, 0.5, 0.8, 0.9, 0.7], [1, 3, 4, 3, 2, 1]]
+
+    # case02 for test
+    # n, k = 3, 7
+    # input_point_list = [[0.1, 0.2, 0.4, 0.6, 0.5, 0.8, 0.9], [1, 3, 3.5, 3, 1, 0.5, 3]]
+
+    # draw_b_spline(n, k, pd.DataFrame({'x': input_point_list[0], 'y': input_point_list[1]}))
+
+</code></pre>
+<h3 id="non-uniform_2">Non-Uniform</h3>
+<pre><code class="language-python"># -*- coding: UTF-8 -*-
+&quot;&quot;&quot;
+    @date-time: 8/2/2024 - 11:38 AM
+    @author: gezq
+&quot;&quot;&quot;
+from math import sqrt
+
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+import task0502_quasi_uniform
+import utils
+
+def length_formula(i, n, k, len_list):
+    &quot;&quot;&quot;
+    节点区间长度公式
+    :param i: 当前节点序号
+    :param k: B样条曲线的次数
+    :param len_list: 相邻控制顶点长度的列表
+    :return: 相邻节点的区间长度
+    &quot;&quot;&quot;
+    denominator = 0
+    for j in range(n + 1, k + 1):
+        denominator += sum(len_list[j - n - 1: j - 1])
+    numerator = sum(len_list[i - n - 1: i - 1])
+    return round(numerator / denominator, 2)
+
+
+def calculate_length(k, df_points):
+    &quot;&quot;&quot;
+    依次计算相邻两控制节点之间的长度
+    :param n: B样条曲线的控制顶点个数
+    :param point_list_x: 选点坐标的x的列表
+    :param point_list_y: 选点坐标的y的列表
+    :return: 相邻控制顶点之间的长度组成的列表
+    &quot;&quot;&quot;
+    len_list = []
+    for i in range(1, k):
+        len_list.append(
+            round(sqrt(pow(df_points.iloc[i, 0] - df_points.iloc[i - 1, 0], 2)
+                       + pow(df_points.iloc[i, 1] - df_points.iloc[i - 1, 1], 2)), 2))
+    return len_list
+
+
+def generate_sequence_non(n, k, df_points):
+    # 次数为p、控制点个数为n + 1,、节点个数为m + 1，三者关系满足：m= n + p + 1
+    left_U = np.repeat(0.0, n + 1)
+    right_U = np.repeat(1.0, n + 1)
+    # 使用Hartley-Judd方法计算内节点
+    mid_U = []
+    len_list = calculate_length(k, df_points)
+    for i in range(n + 1, k):
+        # fix：temp需要在此处置为0
+        temp = 0
+        for j in range(n + 1, i + 1):
+            temp += length_formula(j, n, k, len_list)
+        mid_U.append(temp)
+    # 合并数组
+    return np.concatenate((left_U, mid_U, right_U))
+
+
+def calculate_b_spline_function(n, i, U):
+    # The values of drawing curve, we can add the num to make the curve more soft.
+    u = np.linspace(0, 1, 100)
+    df_b_spline = pd.DataFrame(u, columns=['u'])
+    for j in range(n + 1):
+        single_list = []
+        for uu in u:
+            single_list.append(task0502_quasi_uniform.recursive_formula(n, i + j, U, uu))
+        df_b_spline[j] = single_list
+    return df_b_spline
+
+
+def calculate_b_spline(n, k, df_points):
+    # The sequence of knots
+    # Create the sequence of knots of quasi-uniform.
+    # left_U = np.repeat(0.0, n)
+    # right_U = np.repeat(1.0, n)
+    # # n+k+1 - 2*n = k - n + 1
+    # # Total knots is n+k+1，subtract the repeats of two sides，so the result is k - n + 1.
+    # mid_U = np.linspace(0, 1, k - n + 1)
+    # # The final sequence
+    # U = np.concatenate((left_U, mid_U, right_U))
+    U = generate_sequence_non(n, k, df_points)
+    # utils.add_subscript_knots(U)
+
+    df_result = pd.DataFrame()
+    # Handle each segment of b-spline curve
+    for i in range(k - n):
+        df_b_spline = calculate_b_spline_function(n, i, U)
+        # we can get the b-spline basis function by using the range of u
+        df_basis = df_b_spline[df_b_spline['u'].apply(lambda x:
+                                                      U[i + n] &lt; x &lt; U[i + n + 1])].iloc[:, 1:].reset_index(drop=True)
+        df_real = df_points.iloc[i: i + n + 1].reset_index(drop=True)
+        df_result = pd.concat([df_result, df_basis.dot(df_real)])
+    return df_result
+
+
+def draw_b_spline(n, k, df_points):
+    &quot;&quot;&quot;
+    Draw B-spline curve.
+    :param n: the degree of the B-spline curve.
+    :param k: the number of the control points.
+    :param df_points: the control points.
+    :return: No return.
+    &quot;&quot;&quot;
+    df_result = calculate_b_spline(n, k, df_points)
+    # Draw B-spline curve and control polygon.
+    df_result.plot(x='x', y='y', label='B-spline curve', color='b', ax=plt.gca())
+    df_points.plot(x='x', y='y', label='Control polygon', color='r', marker='o', markerfacecolor='w', ax=plt.gca())
+    utils.add_subscript_control_points(df_points)
+    plt.title(f'{n}-order {k}-control points QuasiUniform B-spline basis functions')
+    plt.xlabel(&quot;u&quot;)
+    plt.ylabel(&quot;w&quot;)
+    plt.show()
+
+
+if __name__ == '__main__':
+    # n = int(input(&quot;Please input the degree of B-spline curve n=&quot;))
+    # k = int(input(&quot;Please input the number of control points k=&quot;))
+    # draw_b_spline(n, k,
+    #               utils.selection_point(k, f'{n}-order {k}-control points Quasi-Uniform B-spline basis functions'))
+
+    # case01 for test
+    n, k = 3, 6
+    input_point_list = [[0.3, 0.1, 0.5, 0.5, 0.9, 0.7], [1, 3, 5, 5, 3, 1]]
+
+    draw_b_spline(n, k, pd.DataFrame({'x': input_point_list[0], 'y': input_point_list[1]}))
+
+</code></pre>
 <h2 id="result_5">Result</h2>
 <h1 id="b">三次均匀B样条曲线插值</h1>
 <h2 id="description_6">Description</h2>
